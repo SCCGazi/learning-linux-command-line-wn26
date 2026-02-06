@@ -19,8 +19,15 @@ fi
 USERNAME=$1
 EXTRA_GROUP=$2
 PASSWORD=$3
-GROUPS="sudo,adm,${EXTRA_GROUP}"   # Dynamically include the passed-in group
+USER_GROUPS="sudo,adm,${EXTRA_GROUP}"   # Dynamically include the passed-in group
 HOME_DIR="/tmp/${USERNAME}_home"   # Codespaces workaround for home directory
+
+# --- 1b. Validate extra group exists ---
+if ! getent group "${EXTRA_GROUP}" > /dev/null; then
+    echo "🛑 Error: Group '${EXTRA_GROUP}' does not exist."
+    echo "Create it with: sudo groupadd ${EXTRA_GROUP}"
+    exit 5
+fi
 
 echo "Starting user creation script for user: ${USERNAME}"
 
@@ -44,7 +51,7 @@ echo "1. Creating user '${USERNAME}' with home directory at ${HOME_DIR}..."
 sudo useradd \
     -m \
     -d "${HOME_DIR}" \
-    -G "${GROUPS}" \
+    -G "${USER_GROUPS}" \
     -s /bin/bash \
     "${USERNAME}"
 
@@ -70,7 +77,7 @@ fi
 
 echo ""
 echo "✅ SUCCESS: User '${USERNAME}' created and configured."
-echo "   - Groups: ${GROUPS}"
+echo "   - Groups: ${USER_GROUPS}"
 echo "   - Home: ${HOME_DIR}"
 echo ""
 echo "Try logging in: su - ${USERNAME}"
