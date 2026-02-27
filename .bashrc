@@ -9,6 +9,16 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias ..='cd ..'
 alias cls='clear'
+#Those are my aliases
+alias t='tree -C'
+alias td='tree -d -C'
+alias t2='tree -L 2 -C'
+alias t3='tree -L 3 -C'
+alias tt='tree -C -I "node_modules|.git|__pycache__|venv"'
+#Create a directory and immediately move into it with one command
+mkcd () {
+    mkdir -p "$1" && cd "$1"
+}
 
 # Enable color for grep
 alias grep='grep --color=auto'
