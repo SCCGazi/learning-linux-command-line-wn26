@@ -31,3 +31,4 @@ if [[ ":$PATH:" != *":$(pwd)/bin:"* ]]; then
     export PATH="$PATH:$(pwd)/bin"
 fi
 ./bin/repo.sh
+echo "source $(pwd)/.bashrc" >> ~/.bashrc
