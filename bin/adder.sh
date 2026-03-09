@@ -4,10 +4,11 @@ source ./tools.sh
 
 echo "Welcome to the adder"
 # Calling the function and capturing the output into a variable
-NUM1=$(getInteger "Please enter the first number:")
-NUM2=$(getInteger "Enter a second number.")
+NUM1=$(getNumber "Please enter the first number:")
+NUM2=$(getNumber "Enter a second number.")
 
-SUM=$((NUM1 + NUM2))
+SUM=$(echo "scale=4; $NUM1 + $NUM2" | bc -l)
 
 echo "-----------------------------------"
 echo "$NUM1 + $NUM2 = $SUM"
+
